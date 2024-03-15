@@ -1,8 +1,8 @@
 package converter
 
 import (
-	domain "github.com/felipeversiane/golang-auth/internal/account"
-	"github.com/felipeversiane/golang-auth/internal/account/handler/entity/response"
+	domain "github.com/felipeversiane/go-auth/internal/account"
+	"github.com/felipeversiane/go-auth/internal/account/handler/entity/response"
 )
 
 func ConvertDomainToResponse(
