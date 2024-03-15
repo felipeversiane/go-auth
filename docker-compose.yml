@@ -1,0 +1,31 @@
+version: '3.0'
+
+services:
+  mongodb:
+    container_name: mg03
+    env_file: .env
+    build:
+      context: .
+      dockerfile: build/db/Dockerfile
+    ports:
+      - "$DB_PORT:$DB_PORT"
+    networks:
+      - golangnetwork
+
+  api:
+    build:
+      context: .
+      dockerfile: build/server/Dockerfile
+    image: app
+    container_name: go03
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "$PORT:$PORT"
+    depends_on:
+      - mongodb
+    networks:
+      - golangnetwork
+
+networks:
+  golangnetwork:
