@@ -12,7 +12,7 @@ type userDomain struct {
 	firstName  string
 	lastName   string
 	age        int8
-	isDeleted  bool
+	isActive   bool
 	created_at string
 	updated_at string
 }
@@ -21,8 +21,8 @@ type UserDomainInterface interface {
 	SetID(id string)
 	GetID() string
 	GetEmail() string
-	GetIsDeleted() bool
-	SetIsDeleted(isDeleted bool)
+	GetIsActive() bool
+	SetIsActive(isActive bool)
 	GetCreatedAt() string
 	SetCreatedAt(created_at string)
 	GetUpdatedAt() string
@@ -71,11 +71,11 @@ func (ud *userDomain) SetID(id string) {
 func (ud *userDomain) GetEmail() string {
 	return ud.email
 }
-func (ud *userDomain) GetIsDeleted() bool {
-	return ud.isDeleted
+func (ud *userDomain) GetIsActive() bool {
+	return ud.isActive
 }
-func (ud *userDomain) SetIsDeleted(isDeleted bool) {
-	ud.isDeleted = isDeleted
+func (ud *userDomain) SetIsActive(isActive bool) {
+	ud.isActive = isActive
 }
 func (ud *userDomain) GetCreatedAt() string {
 	return ud.created_at
