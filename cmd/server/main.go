@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 
+	"github.com/felipeversiane/go-auth/api/router"
 	"github.com/felipeversiane/go-auth/config/database/mongodb"
 	"github.com/felipeversiane/go-auth/config/logger"
 	"github.com/felipeversiane/go-auth/initialization"
@@ -42,4 +43,9 @@ func main() {
 	logger.Info("The Database connection is open now...",
 		zap.String("journey", "NewMongoDBConnection"))
 
+	err = router.InitializeRoutes(database)
+	if err != nil {
+		logger.Fatal("Initialize routes error: ", err,
+			zap.String("journey", "Initialize Routes"))
+	}
 }
