@@ -35,7 +35,6 @@ type UserRepository interface {
 	DeleteUser(
 		userId string,
 	) *httperr.HttpError
-
 	FindUserByEmail(
 		email string,
 	) (domain.UserDomainInterface, *httperr.HttpError)

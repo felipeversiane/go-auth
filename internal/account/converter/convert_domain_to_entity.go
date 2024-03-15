@@ -14,5 +14,8 @@ func ConvertDomainToEntity(
 		FirstName: domain.GetFirstName(),
 		LastName:  domain.GetLastName(),
 		Age:       domain.GetAge(),
+		IsActive:  domain.GetIsActive(),
+		CreatedAt: domain.GetCreatedAt(),
+		UpdatedAt: domain.GetUpdatedAt(),
 	}
 }

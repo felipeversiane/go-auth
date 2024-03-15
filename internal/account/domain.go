@@ -3,18 +3,19 @@ package domain
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"time"
 )
 
 type userDomain struct {
-	id         string
-	email      string
-	password   string
-	firstName  string
-	lastName   string
-	age        int8
-	isActive   bool
-	created_at string
-	updated_at string
+	id        string
+	email     string
+	password  string
+	firstName string
+	lastName  string
+	age       int8
+	isActive  bool
+	createdAt time.Time
+	updatedAt time.Time
 }
 
 type UserDomainInterface interface {
@@ -23,10 +24,10 @@ type UserDomainInterface interface {
 	GetEmail() string
 	GetIsActive() bool
 	SetIsActive(isActive bool)
-	GetCreatedAt() string
-	SetCreatedAt(created_at string)
-	GetUpdatedAt() string
-	SetUpdatedAt(updated_at string)
+	GetCreatedAt() time.Time
+	SetCreatedAt(createdAt time.Time)
+	GetUpdatedAt() time.Time
+	SetUpdatedAt(updatedAt time.Time)
 	GetFirstName() string
 	GetLastName() string
 	GetPassword() string
@@ -47,6 +48,9 @@ func NewUserDomain(
 		firstName: first_name,
 		lastName:  last_name,
 		age:       age,
+		isActive:  true,
+		createdAt: time.Now(),
+		updatedAt: time.Now(),
 	}
 }
 
@@ -59,6 +63,7 @@ func NewUserUpdateDomain(
 		firstName: first_name,
 		lastName:  last_name,
 		age:       age,
+		updatedAt: time.Now(),
 	}
 }
 
@@ -77,17 +82,17 @@ func (ud *userDomain) GetIsActive() bool {
 func (ud *userDomain) SetIsActive(isActive bool) {
 	ud.isActive = isActive
 }
-func (ud *userDomain) GetCreatedAt() string {
-	return ud.created_at
+func (ud *userDomain) GetCreatedAt() time.Time {
+	return ud.createdAt
 }
-func (ud *userDomain) SetCreatedAt(created_at string) {
-	ud.created_at = created_at
+func (ud *userDomain) SetCreatedAt(createdAt time.Time) {
+	ud.createdAt = createdAt
 }
-func (ud *userDomain) GetUpdatedAt() string {
-	return ud.updated_at
+func (ud *userDomain) GetUpdatedAt() time.Time {
+	return ud.updatedAt
 }
-func (ud *userDomain) SetUpdatedAt(updated_at string) {
-	ud.updated_at = updated_at
+func (ud *userDomain) SetUpdatedAt(updatedAt time.Time) {
+	ud.updatedAt = updatedAt
 }
 func (ud *userDomain) GetFirstName() string {
 	return ud.firstName

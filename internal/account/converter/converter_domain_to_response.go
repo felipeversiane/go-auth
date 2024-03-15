@@ -14,5 +14,7 @@ func ConvertDomainToResponse(
 		FirstName: userDomain.GetFirstName(),
 		LastName:  userDomain.GetLastName(),
 		Age:       userDomain.GetAge(),
+		CreatedAt: userDomain.GetCreatedAt(),
+		UpdatedAt: userDomain.GetUpdatedAt(),
 	}
 }
