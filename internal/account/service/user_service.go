@@ -29,5 +29,5 @@ type UserDomainService interface {
 
 	UpdateUserService(string, domain.UserDomainInterface) *httperr.HttpError
 	DeleteUserService(string) *httperr.HttpError
-	LoginUserService(userDomain *domain.UserDomainInterface) (domain.UserDomainInterface, string, *httperr.HttpError)
+	LoginUserService(userDomain domain.UserDomainInterface) (domain.UserDomainInterface, string, *httperr.HttpError)
 }

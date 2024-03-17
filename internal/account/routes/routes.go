@@ -21,6 +21,9 @@ func AccountRoutes(v1 *gin.RouterGroup, database *mongo.Database) *gin.RouterGro
 		account.POST("/create_user", handler.CreateUser)
 		account.PUT("/update_user/:userId", handler.UpdateUser)
 		account.DELETE("/delete_user/:userId", handler.DeleteUser)
+
+		account.POST("/login", handler.LoginUser)
+
 	}
 
 	return account
