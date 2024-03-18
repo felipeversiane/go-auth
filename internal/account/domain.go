@@ -13,7 +13,8 @@ import (
 )
 
 var (
-	JWT_SECRET_KEY = "JWT_SECRET_KEY"
+	JWT_SECRET_KEY         = "JWT_SECRET_KEY"
+	JWT_REFRESH_SECRET_KEY = "JWT_SECRET_REFRESH_KEY"
 )
 
 type userDomain struct {
@@ -43,7 +44,7 @@ type UserDomainInterface interface {
 	GetPassword() string
 	GetAge() int8
 	EncryptPassword()
-	GenerateToken() (string, *httperr.HttpError)
+	GenerateToken() (string, string, *httperr.HttpError)
 }
 
 func NewUserDomain(
@@ -147,8 +148,19 @@ func (ud *userDomain) EncryptPassword() {
 	hash.Write([]byte(ud.password))
 	ud.password = hex.EncodeToString(hash.Sum(nil))
 }
+func (ud *userDomain) GenerateToken() (string, string, *httperr.HttpError) {
+	acessToken, err := ud.GenerateAcessToken()
+	if err != nil {
+		return "", "", err
+	}
+	refreshToken, err := ud.GenerateRefreshToken()
+	if err != nil {
+		return "", "", err
+	}
+	return acessToken, refreshToken, nil
+}
 
-func (ud *userDomain) GenerateToken() (string, *httperr.HttpError) {
+func (ud *userDomain) GenerateAcessToken() (string, *httperr.HttpError) {
 	secret := os.Getenv(JWT_SECRET_KEY)
 
 	claims := jwt.MapClaims{
@@ -169,6 +181,24 @@ func (ud *userDomain) GenerateToken() (string, *httperr.HttpError) {
 	}
 
 	return tokenString, nil
+}
+func (ud *userDomain) GenerateRefreshToken() (string, *httperr.HttpError) {
+	secret := os.Getenv(JWT_REFRESH_SECRET_KEY)
+
+	refreshTokenClaims := jwt.MapClaims{
+		"id":  ud.id,
+		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(),
+	}
+
+	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshTokenClaims)
+
+	refreshTokenString, err := refreshToken.SignedString([]byte(secret))
+	if err != nil {
+		return "", httperr.NewInternalServerError(
+			fmt.Sprintf("error trying to generate refresh token, err=%s", err.Error()))
+	}
+
+	return refreshTokenString, nil
 }
 
 func VerifyToken(tokenValue string) (UserDomainInterface, *httperr.HttpError) {

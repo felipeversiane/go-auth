@@ -13,38 +13,27 @@ import (
 
 func (uh *userHandlerInterface) LoginUser(c *gin.Context) {
 	logger.Info("Init loginUser controller",
-		zap.String("journey", "loginUser"),
-	)
+		zap.String("journey", "loginUser"))
+
 	var userRequest request.UserLogin
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
-		logger.Error("Error trying to validate user info", err,
-			zap.String("journey", "loginUser"))
+		logger.Error("Error trying to validate user info", err, zap.String("journey", "loginUser"))
 		errRest := validation.ValidateError(err)
 
 		c.JSON(errRest.Code, errRest)
 		return
 	}
 
-	domain := domain.NewUserLoginDomain(
-		userRequest.Email,
-		userRequest.Password,
-	)
-	domainResult, token, err := uh.service.LoginUserService(domain)
+	userDomain := domain.NewUserLoginDomain(userRequest.Email, userRequest.Password)
+
+	_, accessToken, refreshToken, err := uh.service.LoginUserService(userDomain)
 	if err != nil {
-		logger.Error(
-			"Error trying to call loginUser service",
-			err,
+		logger.Error("Error trying to call loginUser service", err,
 			zap.String("journey", "loginUser"))
 		c.JSON(err.Code, err)
 		return
 	}
 
-	logger.Info(
-		"loginUser controller executed successfully",
-		zap.String("userId", domainResult.GetID()),
-		zap.String("journey", "loginUser"))
-
-	c.Header("Authorization", token)
-	c.JSON(http.StatusOK, token)
+	c.JSON(http.StatusOK, gin.H{"access_token": accessToken, "refresh_token": refreshToken})
 }
