@@ -167,7 +167,7 @@ func (ud *userDomain) GenerateAcessToken() (string, *httperr.HttpError) {
 		"id":         ud.id,
 		"email":      ud.email,
 		"first_name": ud.firstName,
-		"last_name":  ud.firstName,
+		"last_name":  ud.lastName,
 		"age":        ud.age,
 		"exp":        time.Now().Add(time.Hour * 24).Unix(),
 	}

@@ -20,6 +20,7 @@ type UserHandlerInterface interface {
 	CreateUser(c *gin.Context)
 	UpdateUser(c *gin.Context)
 	LoginUser(c *gin.Context)
+	VerifyToken(c *gin.Context)
 }
 
 type userHandlerInterface struct {

@@ -25,7 +25,7 @@ func AccountRoutes(v1 *gin.RouterGroup, database *mongo.Database) *gin.RouterGro
 
 		account.POST("/jwt/login", handler.LoginUser)
 		account.POST("/jwt/refresh")
-		account.POST("/jwt/verify")
+		account.POST("/jwt/verify", handler.VerifyToken)
 		account.POST("/jwt/logout")
 
 	}
