@@ -45,6 +45,8 @@ type UserDomainInterface interface {
 	GetAge() int8
 	EncryptPassword()
 	GenerateToken() (string, string, *httperr.HttpError)
+	GenerateRefreshToken() (string, *httperr.HttpError)
+	GenerateAcessToken() (string, *httperr.HttpError)
 }
 
 func NewUserDomain(
@@ -201,7 +203,7 @@ func (ud *userDomain) GenerateRefreshToken() (string, *httperr.HttpError) {
 	return refreshTokenString, nil
 }
 
-func VerifyToken(tokenValue string) (UserDomainInterface, *httperr.HttpError) {
+func VerifyAcessToken(tokenValue string) (UserDomainInterface, *httperr.HttpError) {
 	secret := os.Getenv(JWT_SECRET_KEY)
 
 	token, err := jwt.Parse(utils.RemoveBearerPrefix(tokenValue), func(token *jwt.Token) (interface{}, error) {
@@ -226,5 +228,29 @@ func VerifyToken(tokenValue string) (UserDomainInterface, *httperr.HttpError) {
 		firstName: claims["first_name"].(string),
 		lastName:  claims["last_name"].(string),
 		age:       int8(claims["age"].(float64)),
+	}, nil
+}
+
+func VerifyRefreshToken(tokenValue string) (UserDomainInterface, *httperr.HttpError) {
+	secret := os.Getenv(JWT_REFRESH_SECRET_KEY)
+
+	token, err := jwt.Parse(utils.RemoveBearerPrefix(tokenValue), func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); ok {
+			return []byte(secret), nil
+		}
+
+		return nil, httperr.NewBadRequestError("invalid token")
+	})
+	if err != nil {
+		return nil, httperr.NewUnauthorizedRequestError("invalid token")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok || !token.Valid {
+		return nil, httperr.NewUnauthorizedRequestError("invalid token")
+	}
+
+	return &userDomain{
+		id: claims["id"].(string),
 	}, nil
 }

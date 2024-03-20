@@ -23,10 +23,9 @@ func AccountRoutes(v1 *gin.RouterGroup, database *mongo.Database) *gin.RouterGro
 		account.PUT("/update_user/:userId", handler.UpdateUser)
 		account.DELETE("/delete_user/:userId", handler.DeleteUser)
 
-		account.POST("/jwt/login", handler.LoginUser)
-		account.POST("/jwt/refresh")
+		account.POST("/jwt/create", handler.LoginUser)
+		account.POST("/jwt/refresh", handler.RefreshToken)
 		account.POST("/jwt/verify", handler.VerifyToken)
-		account.POST("/jwt/logout")
 
 	}
 

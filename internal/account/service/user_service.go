@@ -31,4 +31,6 @@ type UserDomainService interface {
 	DeleteUserService(string) *httperr.HttpError
 	LoginUserService(userDomain domain.UserDomainInterface) (domain.UserDomainInterface, string, string, *httperr.HttpError)
 	VerifyTokenService(string) (domain.UserDomainInterface, *httperr.HttpError)
+	RefreshTokenService(string) (string, *httperr.HttpError)
+
 }
