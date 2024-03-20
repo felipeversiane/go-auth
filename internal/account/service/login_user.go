@@ -8,7 +8,7 @@ import (
 )
 
 func (ud *userDomainService) LoginUserService(userDomain domain.UserDomainInterface) (domain.UserDomainInterface, string, string, *httperr.HttpError) {
-	logger.Info("Init loginUser model.",
+	logger.Info("Init loginUser service.",
 		zap.String("journey", "loginUser"))
 
 	userDomain.EncryptPassword()

@@ -7,7 +7,7 @@ import (
 )
 
 func (ud *userDomainService) DeleteUserService(userId string) *httperr.HttpError {
-	logger.Info("Init deleteUser model.",
+	logger.Info("Init deleteUser service.",
 		zap.String("journey", "deleteUser"))
 
 	err := ud.userRepository.DeleteUser(userId)

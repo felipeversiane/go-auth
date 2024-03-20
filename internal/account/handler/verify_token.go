@@ -10,7 +10,7 @@ import (
 )
 
 func (uh *userHandlerInterface) VerifyToken(c *gin.Context) {
-	logger.Info("Init verifyToken controller",
+	logger.Info("Init verifyToken handler",
 		zap.String("journey", "verifyToken"))
 
 	token := c.GetHeader("Authorization")
@@ -29,7 +29,7 @@ func (uh *userHandlerInterface) VerifyToken(c *gin.Context) {
 		return
 	}
 
-	logger.Info("verifyToken controller executed successfully",
+	logger.Info("verifyToken handler executed successfully",
 		zap.String("userId", user.GetID()), zap.String("journey", "verifyToken"))
 
 	c.JSON(http.StatusOK, gin.H{

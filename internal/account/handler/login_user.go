@@ -12,7 +12,7 @@ import (
 )
 
 func (uh *userHandlerInterface) LoginUser(c *gin.Context) {
-	logger.Info("Init loginUser controller",
+	logger.Info("Init loginUser handler",
 		zap.String("journey", "loginUser"))
 
 	var userRequest request.UserLogin

@@ -11,7 +11,7 @@ func (ud *userDomainService) VerifyTokenService(tokenValue string) (domain.UserD
 	logger.Info("Init verifyToken service.",
 		zap.String("journey", "verifyToken"))
 
-	user, err := domain.VerifyToken(tokenValue)
+	user, err := domain.VerifyAcessToken(tokenValue)
 	if err != nil {
 		return nil, err
 	}

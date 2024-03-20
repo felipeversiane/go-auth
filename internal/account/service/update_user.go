@@ -11,7 +11,7 @@ func (ud *userDomainService) UpdateUserService(
 	userId string,
 	userDomain domain.UserDomainInterface,
 ) *httperr.HttpError {
-	logger.Info("Init updateUser model.",
+	logger.Info("Init updateUser service.",
 		zap.String("journey", "updateUser"))
 
 	err := ud.userRepository.UpdateUser(userId, userDomain)
