@@ -9,7 +9,7 @@ import (
 
 func InitializeRoutes(database *mongo.Database) error {
 
-	logger.Info("Initializing Routes...",
+	logger.Info("Initializing Routes.",
 		zap.String("journey", "Initialize Routes"))
 
 	router := gin.Default()

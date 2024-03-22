@@ -30,8 +30,9 @@ func init() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 }
+
 func main() {
-	logger.Info("The API is going to run...",
+	logger.Info("The API is going to run.",
 		zap.String("journey", "Initialize"))
 
 	database, err := mongodb.NewMongoDBConnection(context.Background())
@@ -40,7 +41,7 @@ func main() {
 			zap.String("journey", "NewMongoDBConnection"))
 	}
 
-	logger.Info("The Database connection is open now...",
+	logger.Info("The Database connection is open now.",
 		zap.String("journey", "NewMongoDBConnection"))
 
 	err = router.InitializeRoutes(database)

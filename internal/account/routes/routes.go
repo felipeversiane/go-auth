@@ -18,10 +18,10 @@ func AccountRoutes(v1 *gin.RouterGroup, database *mongo.Database) *gin.RouterGro
 	account := v1.Group("/account")
 	{
 		account.GET("/get_user_by_id/:userId", handler.FindUserByID)
-		account.GET("/get_user_by_email/:userEmail", middleware.VerifyTokenMiddleware, handler.FindUserByEmail)
+		account.GET("/get_user_by_email/:userEmail", handler.FindUserByEmail)
 		account.POST("/create_user", handler.CreateUser)
-		account.PUT("/update_user/:userId", handler.UpdateUser)
-		account.DELETE("/delete_user/:userId", handler.DeleteUser)
+		account.PUT("/update_user/:userId", middleware.VerifyTokenMiddleware, handler.UpdateUser)
+		account.DELETE("/delete_user/:userId", middleware.VerifyTokenMiddleware, handler.DeleteUser)
 
 		account.POST("/jwt/create", handler.LoginUser)
 		account.POST("/jwt/refresh", handler.RefreshToken)
