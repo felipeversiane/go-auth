@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/felipeversiane/go-auth/api/utils"
 	"github.com/felipeversiane/go-auth/config/httperr"
-	"github.com/felipeversiane/go-auth/internal/account/utils"
 	"github.com/golang-jwt/jwt"
 )
 

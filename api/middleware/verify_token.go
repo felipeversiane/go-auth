@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/felipeversiane/go-auth/api/utils"
 	"github.com/felipeversiane/go-auth/config/httperr"
 	"github.com/felipeversiane/go-auth/config/logger"
 	domain "github.com/felipeversiane/go-auth/internal/account"
-	"github.com/felipeversiane/go-auth/internal/account/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 )
